@@ -36,6 +36,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+
+    [self lookupContact];
+    
+}
+
+//检索联系人
+- (void)lookupContact {
+    
+    CNContactFetchRequest *request = [[CNContactFetchRequest alloc] initWithKeysToFetch:@[CNContactGivenNameKey]];
+    
+    CNContactStore *store = [[CNContactStore alloc] init];
+    [store enumerateContactsWithFetchRequest:request error:nil usingBlock:^(CNContact * _Nonnull contact, BOOL * _Nonnull stop) {
+        NSLog(@"------ %@",contact);
+    }];
+    
+}
+
+- (void)addNewContact {
     //添加联系人对象
     CNMutableContact *mutableContact = [[CNMutableContact alloc] init];
     mutableContact.givenName = @"黎明";
@@ -50,12 +68,12 @@
     mutableContact.emailAddresses = @[email1];
     
     
-//    mutableContact.postalAddresses 联系人 邮寄地址
-//    mutableContact.urlAddresses 联系人 URL地址
-//    mutableContact.contactRelations 联系人 关系人
-//    mutableContact.socialProfiles 联系人 生日 纪念日等
-//    mutableContact.instantMessageAddresses 联系人即时信息
-//    以上添加都可添加多个，集合
+    //    mutableContact.postalAddresses 联系人 邮寄地址
+    //    mutableContact.urlAddresses 联系人 URL地址
+    //    mutableContact.contactRelations 联系人 关系人
+    //    mutableContact.socialProfiles 联系人 生日 纪念日等
+    //    mutableContact.instantMessageAddresses 联系人即时信息
+    //    以上添加都可添加多个，集合
     
     
     CNSaveRequest *request = [[CNSaveRequest alloc] init];
@@ -70,7 +88,6 @@
         NSLog(@"=========== %d",isSaved);
     }
 }
-
 
 - (void)beforeIOS9 {
     // 1.创建选择联系人的控制器
